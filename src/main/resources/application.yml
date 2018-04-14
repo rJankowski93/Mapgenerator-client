@@ -1,0 +1,7 @@
+server:
+  port: 8081
+resource:
+  devices: http://localhost:8080/device/devices
+  device: http://localhost:8080/device/{id}
+  search: http://localhost:8080/device/search
+  create: http://localhost:8080/device/save
