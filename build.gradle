@@ -27,6 +27,9 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile 'org.webjars:materializecss:0.96.0'
+	compile 'org.webjars:jquery:2.1.4'
+	compile group: 'org.webjars', name: 'bootstrap', version: '3.3.7'
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

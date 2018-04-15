@@ -11,5 +11,7 @@ public class DeviceDTO {
 
     public String name;
 
+    public String btAddress;
+
     public String url;
 }

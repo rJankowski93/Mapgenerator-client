@@ -1,7 +1,13 @@
 server:
   port: 8081
 resource:
-  devices: http://localhost:8080/device/devices
-  device: http://localhost:8080/device/{id}
-  search: http://localhost:8080/device/search
-  create: http://localhost:8080/device/save
+  device:
+    devices: http://localhost:8080/device/devices
+    device: http://localhost:8080/device/{id}
+    search: http://localhost:8080/device/search
+    create: http://localhost:8080/device/save
+    connect: http://localhost:8080/device/connect/{deviceId}
+    remove: http://localhost:8080/device/{id}
+  map:
+    generateData: http://localhost:8080/map/generateData
+    encoderData: http://localhost:8080/map/encoderData

@@ -1,9 +1,9 @@
 package com.mgr.mapgenerator.service;
 
 import com.mgr.mapgenerator.dto.DeviceDTO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,20 +14,24 @@ import java.util.stream.Collectors;
 @Service
 public class DeviceService {
 
-    @Value("${resource.devices}")
+    @Value("${resource.device.devices}")
     private String resourceDevices;
 
 
-    @Value("${resource.device}")
+    @Value("${resource.device.device}")
     private String resourceDevice;
 
-
-    @Value("${resource.search}")
+    @Value("${resource.device.search}")
     private String resourceSearch;
 
-    @Value("${resource.create}")
+    @Value("${resource.device.create}")
     private String resourceDeviceCreate;
 
+    @Value("${resource.device.connect}")
+    private String resourceDeviceConnect;
+
+    @Value("${resource.device.remove}")
+    private String resourceDeviceRemove;
 
     private RestTemplate restTemplate;
 
@@ -40,15 +44,23 @@ public class DeviceService {
         return Arrays.stream(restTemplate.getForObject(resourceDevices, DeviceDTO[].class)).collect(Collectors.toList());
     }
 
-    public List<DeviceDTO> getDevice() {
-        return Arrays.stream(restTemplate.getForObject(resourceDevice, DeviceDTO[].class)).collect(Collectors.toList());
+    public List<DeviceDTO> getDevice(Long id) {
+        return Arrays.stream(restTemplate.getForObject(resourceDevice, DeviceDTO[].class, id)).collect(Collectors.toList());
     }
 
     public List<DeviceDTO> searchDevices() {
         return Arrays.stream(restTemplate.getForObject(resourceSearch, DeviceDTO[].class)).collect(Collectors.toList());
     }
 
-    public DeviceDTO save(String  name) {
+    public DeviceDTO save(String name) {
         return restTemplate.postForObject(resourceDeviceCreate, name, DeviceDTO.class);
+    }
+
+    public ResponseEntity connect() {
+        return restTemplate.getForObject(resourceDeviceConnect, ResponseEntity.class);
+    }
+
+    public void remove(Long id) {
+        restTemplate.delete(resourceDeviceRemove, id);
     }
 }
