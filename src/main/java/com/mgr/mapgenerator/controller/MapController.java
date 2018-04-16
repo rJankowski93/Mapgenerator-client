@@ -22,16 +22,17 @@ public class MapController {
         this.mapService = mapService;
     }
 
-//    @RequestMapping(path = "/generateData", method = RequestMethod.GET)
-//    public String generateData() {
-//        mapService.generateData();
-//        return "forward:/encoderData";
-//    }
-
     @RequestMapping(path = "/encoderData", method = RequestMethod.GET)
     public String getEncoderData(Model model) {
         mapService.generateData();
         model.addAttribute("encoderDataList",  mapService.getAll());
         return "encoder-data.html";
+    }
+
+    @RequestMapping(path = "/map", method = RequestMethod.GET)
+    public String getMap(Model model) {
+        mapService.generateData();
+        model.addAttribute("encoderDataList",  mapService.getAll());
+        return "map.html";
     }
 }
