@@ -26,12 +26,43 @@
 
 <div class="container">
     <div class="starter-template">
-
-
+        <canvas id="myCanvas" width="500" height="500"
+                style="border:1px solid #000000;">
+        </canvas>
     </div>
 </div>
 
 <script type="text/javascript" src="../webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./heatmap.min.js"></script>
+<script th:inline="javascript">
+(function () {
+    let points = [[${encoderDataList}]];
+    let c = document.getElementById("myCanvas");
+            let ctx = c.getContext("2d");
+            let x1 = 0;
+            let y1 = 250;
+            ctx.moveTo(x1, y1);
+            let dtemp = 0;
+            for (let encoderData of points) {
+                dtemp = dtemp + encoderData.degrees;
+                let x2 = getX(x1, dtemp, 2*encoderData.distance);
+                let y2 = getY(y1, dtemp, 2*encoderData.distance);
+                ctx.lineTo(x2, y2);
+                x1 = x2;
+                y1 = y2;
+                ctx.stroke();
+            }
+ })();
 
+   function getX(oldX, degree, r) {
+        let degreeX = Math.cos(Math.PI * degree / 180.0);
+        return oldX + r * degreeX;
+    }
+
+    function getY(oldY, degree, r) {
+        let degreeY = Math.sin(Math.PI * degree / 180.0);
+        return oldY + r * degreeY;
+    }
+</script>
 </body>
 </html>

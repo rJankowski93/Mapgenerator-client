@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class MapService {
 
-    @Value("${resource.map.generateData}")
-    private String resourceGenerateData;
+    @Value("${resource.map.refreshData}")
+    private String resourceRefreshData;
 
 
     @Value("${resource.map.encoderData}")
@@ -29,11 +29,15 @@ public class MapService {
         this.restTemplate = restTemplate;
     }
 
-    public void generateData() {
-        restTemplate.postForEntity(resourceGenerateData, null, EncoderDataDTO[].class);
+    public void refreshData() {
+        restTemplate.postForEntity(resourceRefreshData, null, EncoderDataDTO[].class);
     }
 
-    public List<EncoderDataDTO> getAll() {
-        return Arrays.stream(restTemplate.getForObject(resourceEncoderData, EncoderDataDTO[].class)).collect(Collectors.toList());
+    public List<EncoderDataDTO> getEncoderData(String selectedDevice) {
+        if (selectedDevice != null) {
+            return Arrays.stream(restTemplate.getForObject(resourceEncoderData, EncoderDataDTO[].class, selectedDevice)).collect(Collectors.toList());
+        } else {
+            return new ArrayList<>();
+        }
     }
 }

@@ -27,10 +27,14 @@
 <div class="container">
     <div class="starter-template">
         <h1>Encoder Data</h1>
-             <button type="button" class="btn btn-danger">
-                <a class="btnLink" th:href="@{encoderData}" >Generate data
-                </a>
+        <form  th:action="@{encoderData}" >
+<select  name="selectedDevice">
+            <option th:each="deviceName : ${connectedDevices}" th:value="${deviceName}" th:text="${deviceName}" th:selected="${deviceName==selectedDevice}">Connected Device</option>
+ </select>
+             <button type="submit" class="btn btn-danger">
+                Refresh Data
             </button>
+            </form>
         <table id="vets" class="table table-striped">
            <thead>
              <tr>

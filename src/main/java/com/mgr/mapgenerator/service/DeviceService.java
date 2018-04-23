@@ -17,7 +17,6 @@ public class DeviceService {
     @Value("${resource.device.devices}")
     private String resourceDevices;
 
-
     @Value("${resource.device.device}")
     private String resourceDevice;
 
@@ -32,6 +31,9 @@ public class DeviceService {
 
     @Value("${resource.device.remove}")
     private String resourceDeviceRemove;
+
+    @Value("${resource.device.connectedDevices}")
+    private String resourceConnectedDevices;
 
     private RestTemplate restTemplate;
 
@@ -56,11 +58,15 @@ public class DeviceService {
         return restTemplate.postForObject(resourceDeviceCreate, name, DeviceDTO.class);
     }
 
-    public ResponseEntity connect() {
-        return restTemplate.getForObject(resourceDeviceConnect, ResponseEntity.class);
+    public ResponseEntity connect(Long deviceId) {
+        return restTemplate.getForObject(resourceDeviceConnect, ResponseEntity.class, deviceId);
     }
 
     public void remove(Long id) {
         restTemplate.delete(resourceDeviceRemove, id);
+    }
+
+    public List<String> getConnectedDevices() {
+        return Arrays.stream(restTemplate.getForObject(resourceConnectedDevices, String[].class)).collect(Collectors.toList());
     }
 }
