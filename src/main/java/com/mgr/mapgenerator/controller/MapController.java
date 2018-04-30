@@ -1,17 +1,14 @@
 package com.mgr.mapgenerator.controller;
 
-import com.mgr.mapgenerator.dto.EncoderDataDTO;
 import com.mgr.mapgenerator.service.DeviceService;
 import com.mgr.mapgenerator.service.MapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -29,19 +26,20 @@ public class MapController {
     }
 
     @RequestMapping(path = "/encoderData", method = RequestMethod.GET)
-    public String getEncoderData(Model model, @RequestParam(required = false) String selectedDevice) {
-        mapService.refreshData();
+    public String getEncoderData(Model model, @RequestParam(required = false) String selectedDevice, @RequestParam(required = false) Boolean isShowConcentrations) {
+        mapService.refreshData(selectedDevice);
         model.addAttribute("selectedDevice", selectedDevice);
-        model.addAttribute("connectedDevices", deviceService.getConnectedDevices());
+        model.addAttribute("connectedDevices", deviceService.getDeviceNames());
         model.addAttribute("encoderDataList", mapService.getEncoderData(selectedDevice));
         return "encoder-data.html";
     }
 
-    @RequestMapping(path = "/map", params = {"selectedDevice"}, method = RequestMethod.GET)
-    public String getMap(Model model, @RequestParam String selectedDevice) {
-        mapService.refreshData();
+    @RequestMapping(path = "/map", method = RequestMethod.GET)
+    public String getMap(Model model, @RequestParam(required = false) String selectedDevice, @RequestParam(required = false) Boolean isShowConcentrations) {
+        mapService.refreshData(selectedDevice);
         model.addAttribute("selectedDevice", selectedDevice);
-        model.addAttribute("connectedDevices", deviceService.getConnectedDevices());
+        model.addAttribute("isShowConcentrations", isShowConcentrations);
+        model.addAttribute("connectedDevices", deviceService.getDeviceNames());
         model.addAttribute("encoderDataList", mapService.getEncoderData(selectedDevice));
         return "map.html";
     }

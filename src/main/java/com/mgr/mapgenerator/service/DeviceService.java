@@ -35,6 +35,11 @@ public class DeviceService {
     @Value("${resource.device.connectedDevices}")
     private String resourceConnectedDevices;
 
+
+    @Value("${resource.device.deviceNames}")
+    private String resourceDeviceNames;
+
+
     private RestTemplate restTemplate;
 
     @Autowired
@@ -68,5 +73,10 @@ public class DeviceService {
 
     public List<String> getConnectedDevices() {
         return Arrays.stream(restTemplate.getForObject(resourceConnectedDevices, String[].class)).collect(Collectors.toList());
+    }
+
+
+    public List<String> getDeviceNames() {
+        return Arrays.stream(restTemplate.getForObject(resourceDeviceNames, String[].class)).collect(Collectors.toList());
     }
 }

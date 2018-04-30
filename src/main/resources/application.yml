@@ -9,6 +9,7 @@ resource:
     connect: http://localhost:8080/device/connect/{deviceId}
     remove: http://localhost:8080/device/{id}
     connectedDevices: http://localhost:8080/device/connectedDevices
+    deviceNames: http://localhost:8080/device/deviceNames
   map:
-    refreshData: http://localhost:8080/map/generateData
+    refreshData: http://localhost:8080/map/refreshData
     encoderData: http://localhost:8080/map/encoderData/{selectedDevice}

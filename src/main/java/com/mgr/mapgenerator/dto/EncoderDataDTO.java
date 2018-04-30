@@ -7,4 +7,6 @@ public class EncoderDataDTO {
     public Double degrees;
 
     public Double distance;
+
+    public Double sensor;
 }

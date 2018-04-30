@@ -4,7 +4,11 @@ import com.mgr.mapgenerator.dto.DeviceDTO;
 import com.mgr.mapgenerator.dto.EncoderDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,8 +33,11 @@ public class MapService {
         this.restTemplate = restTemplate;
     }
 
-    public void refreshData() {
-        restTemplate.postForEntity(resourceRefreshData, null, EncoderDataDTO[].class);
+    public void refreshData(String deviceName) {
+        MultiValueMap<String,String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("deviceName",deviceName);
+        HttpEntity<MultiValueMap<String,String>> entity = new HttpEntity<>(parameters, new HttpHeaders());
+        restTemplate.postForEntity(resourceRefreshData, entity, EncoderDataDTO[].class);
     }
 
     public List<EncoderDataDTO> getEncoderData(String selectedDevice) {
