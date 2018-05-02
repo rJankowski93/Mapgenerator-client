@@ -35,10 +35,11 @@ public class DeviceService {
     @Value("${resource.device.connectedDevices}")
     private String resourceConnectedDevices;
 
-
     @Value("${resource.device.deviceNames}")
     private String resourceDeviceNames;
 
+    @Value("${resource.device.saveData}")
+    private String resourceSaveData;
 
     private RestTemplate restTemplate;
 
@@ -78,5 +79,9 @@ public class DeviceService {
 
     public List<String> getDeviceNames() {
         return Arrays.stream(restTemplate.getForObject(resourceDeviceNames, String[].class)).collect(Collectors.toList());
+    }
+
+    public void saveData(Long deviceId) {
+        restTemplate.getForObject(resourceSaveData, ResponseEntity.class, deviceId);
     }
 }

@@ -7,6 +7,7 @@ resource:
     search: http://localhost:8080/device/search
     create: http://localhost:8080/device/save
     connect: http://localhost:8080/device/connect/{deviceId}
+    saveData: http://localhost:8080/device/connect/saveData/{deviceId}
     remove: http://localhost:8080/device/{id}
     connectedDevices: http://localhost:8080/device/connectedDevices
     deviceNames: http://localhost:8080/device/deviceNames

@@ -25,7 +25,6 @@ public class MapService {
     @Value("${resource.map.encoderData}")
     private String resourceEncoderData;
 
-
     private RestTemplate restTemplate;
 
     @Autowired
@@ -34,9 +33,9 @@ public class MapService {
     }
 
     public void refreshData(String deviceName) {
-        MultiValueMap<String,String> parameters = new LinkedMultiValueMap<>();
-        parameters.add("deviceName",deviceName);
-        HttpEntity<MultiValueMap<String,String>> entity = new HttpEntity<>(parameters, new HttpHeaders());
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("deviceName", deviceName);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(parameters, new HttpHeaders());
         restTemplate.postForEntity(resourceRefreshData, entity, EncoderDataDTO[].class);
     }
 
@@ -47,4 +46,5 @@ public class MapService {
             return new ArrayList<>();
         }
     }
+
 }

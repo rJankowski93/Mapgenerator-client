@@ -49,6 +49,7 @@ public class DeviceController {
     public String connect(@PathVariable("deviceId") Long deviceId, RedirectAttributes redirectAttributes) {
         try {
             deviceService.connect(deviceId);
+            deviceService.saveData(deviceId);
             redirectAttributes.addFlashAttribute("message", "Connected device");
             redirectAttributes.addFlashAttribute("alertClass", "alert-success");
         } catch (HttpClientErrorException e) {
