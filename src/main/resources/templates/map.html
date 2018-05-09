@@ -100,7 +100,7 @@ background-color: #55ad4a;
             dtemp = dtemp + encoderData.degrees;
             let x2 = getX(x1, dtemp, 2*encoderData.distance);
             let y2 = getY(y1, dtemp, 2*encoderData.distance);
-            let sensor = encoderData.sensor*10;
+            let sensor = encoderData.sensor;
             pointsHeatMap.push({x:Math.floor( x2), y:Math.floor( y2 ) , value: sensor});
             ctx.lineTo(x2, y2);
             x1 = x2;
@@ -120,7 +120,7 @@ background-color: #55ad4a;
         document.getElementById("checkboxshow").checked = isShowConcentrations;
         if(isShowConcentrations)
         {
-            heatmapInstance.setData({ max: 100, data: pointsHeatMap });
+            heatmapInstance.setData({ min: 500, max: 1000, data: pointsHeatMap });
         }
     })();
 
